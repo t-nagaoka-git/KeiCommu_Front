@@ -1,43 +1,26 @@
-import React, {FC} from 'react';
 import {GetStaticProps} from 'next';
-import {postsIndex} from '@/apis/posts'
+import {useRouter} from 'next/router';
+import {useEffect, useContext} from 'react';
+import {AuthContext} from '@/pages/_app';
+import {Template} from '@/components/templates';
 
-type Post = {
-  id: number;
-  title: string;
+export const getStaticProps: GetStaticProps = async () => {
+  return {props: {}};
 };
 
-type Props = {
-  posts: Post[];
-};
+export default function Page() {
+  const router = useRouter();
+  const {isLoggedIn} = useContext(AuthContext);
+  useEffect(() => {
+    console.log(isLoggedIn);
+    if (!isLoggedIn) {
+      router.push('/login');
+    }
+  }, []);
 
-const Home: FC<Props> = (props) => {
-  console.log(props)
   return (
-    <div>
-      <h2>POSTの一覧</h2>
-      <table>
-        {/* {props.posts.map((post) => (
-          <tr>
-            <td>{post.id}.</td>
-            <td>{post.title}</td>
-          </tr>
-        ))} */}
-      </table>
-    </div>
+    <>
+      <Template />
+    </>
   );
-};
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const response = await postsIndex();
-  console.log(response)
-  // const json = await response.json();
-
-  return {
-    props: {
-      posts: response,
-    },
-  };
-};
-
-export default Home;
+}
