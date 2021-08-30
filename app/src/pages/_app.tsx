@@ -39,16 +39,16 @@ export default function MyApp({Component, pageProps}: AppProps) {
 
     setLoading(false);
   };
-  
+
   useEffect(() => {
     handleGetCurrentUser();
   }, [setCurrentUser]);
 
   return (
-    <Layout>
-      <AuthContext.Provider value={{loading, setLoading, isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser}}>
+    <AuthContext.Provider value={{loading, setLoading, isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser}}>
+      <Layout>
         <Component {...pageProps} />
-      </AuthContext.Provider>
-    </Layout>
+      </Layout>
+    </AuthContext.Provider>
   );
 }
