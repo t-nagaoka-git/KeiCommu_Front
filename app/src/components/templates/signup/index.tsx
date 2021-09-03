@@ -114,7 +114,7 @@ export function Template() {
             className={classes.toggle}
             onChange={handleChnageGender}
           >
-            <ToggleButton value="man" className={classes.toggleBtn} color="primary">
+            <ToggleButton value="man" className={classes.toggleBtn}>
               男性
             </ToggleButton>
             <ToggleButton value="woman" className={classes.toggleBtn}>
