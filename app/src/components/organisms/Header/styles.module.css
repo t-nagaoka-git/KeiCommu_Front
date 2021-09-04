@@ -1,9 +1,17 @@
-.module {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgb(55, 55, 55);
+.module a {
+  color: #fff;
+}
+
+.module a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.authButtons a {
+  color: #000;
+}
+
+.authButtons a:hover {
+  color: #000;
+  text-decoration: none;
 }
