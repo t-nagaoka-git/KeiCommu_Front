@@ -33,6 +33,7 @@ const MicropostForm = () => {
     try {
       const res = await createMicropost(currentUser.id, params);
       console.log(res);
+      setContent('');
     } catch (err) {
       console.log(err);
     }
@@ -45,6 +46,7 @@ const MicropostForm = () => {
           <Card className={classes.card}>
             <CardContent>
               <TextField
+                value={content}
                 variant="outlined"
                 multiline
                 rows={4}
