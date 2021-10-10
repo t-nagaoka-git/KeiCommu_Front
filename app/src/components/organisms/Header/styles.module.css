@@ -1,3 +1,7 @@
+.module {
+  align-items: center;
+}
+
 .module a {
   color: #fff;
 }
