@@ -1,6 +1,6 @@
 import {createContext, useState, useEffect} from 'react';
 import type {AppProps} from 'next/app';
-import {User} from '@/interfaces/index';
+import {User} from '@/interfaces/models/user';
 import {Layout} from '@/components/organisms/Layout';
 import {getCurrentUser} from '@/apis/auth';
 import '../styles/globals.css';
@@ -24,12 +24,10 @@ export default function MyApp({Component, pageProps}: AppProps) {
   const handleGetCurrentUser = async () => {
     try {
       const res = await getCurrentUser();
-      console.log(res)
+
       if (res?.data.isLogin === true) {
         setIsLoggedIn(true);
         setCurrentUser(res?.data.data);
-
-        console.log(res?.data.data);
       } else {
         console.log('No current user');
       }
@@ -39,6 +37,13 @@ export default function MyApp({Component, pageProps}: AppProps) {
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement?.removeChild(jssStyles);
+    }
+  }, []);
 
   useEffect(() => {
     handleGetCurrentUser();
