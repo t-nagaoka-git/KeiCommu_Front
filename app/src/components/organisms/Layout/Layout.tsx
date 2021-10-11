@@ -5,12 +5,10 @@ import {Container, Grid} from '@material-ui/core';
 export function Layout(props: {children?: React.ReactNode}) {
   return (
     <div className={styles.module}>
-      <header>
-        <Header />
-      </header>
+      <Header />
       <main>
-        <Container maxWidth="sm">
-          <Grid container justifyContent="center">
+        <Container maxWidth="xs">
+          <Grid container justifyContent="center" direction="column">
             {props.children}
           </Grid>
         </Container>
