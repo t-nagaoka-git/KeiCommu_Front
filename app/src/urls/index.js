@@ -6,7 +6,18 @@ export const signInUrl = 'auth/sign_in';
 export const signOutUrl = 'auth/sign_out';
 export const getCurrentUserUrl = 'auth/sessions';
 
-// microposts
-export const createMicropostURL = (userId) => {
-  return `users/${userId}/microposts`;
+// users
+export const getUserUrl = (id) => {
+  return `users/${id}`;
 };
+export const searchUsersUrl = (keyword) => {
+  return `users/search?keyword=${keyword}`;
+};
+
+// microposts
+export const indexMicropostUrl = 'microposts';
+export const createMicropostUrl = 'microposts';
+
+// teams
+export const getTeamDetailListUrl = 'teams/list';
+export const createTeamUrl = 'teams';
