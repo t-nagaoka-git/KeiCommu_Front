@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 import {useRouter} from 'next/router';
 import React from 'react';
 import {AuthContext} from '@/pages/_app';
@@ -7,19 +7,27 @@ import Cookies from 'js-cookie';
 import styles from './styles.module.css';
 import {Button, AppBar, Toolbar, Typography, IconButton, Menu, MenuItem} from '@material-ui/core';
 import Link from 'next/link';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import HomeIcon from '@material-ui/icons/Home';
+import GroupIcon from '@material-ui/icons/Group';
+import SearchIcon from '@material-ui/icons/Search';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
+  toolbar: {
+    maxWidth: 500,
+    width: '100%',
+  },
   title: {
     flexGrow: 1,
   },
+  offset: theme.mixins.toolbar,
 }));
 
 function HeaderBase() {
   const router = useRouter();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const {isLoggedIn, setIsLoggedIn} = React.useContext(AuthContext);
+  const {isLoggedIn, setIsLoggedIn, currentUser} = React.useContext(AuthContext);
   const open = Boolean(anchorEl);
 
   const handleMenu = (event) => {
@@ -42,8 +50,6 @@ function HeaderBase() {
 
           setIsLoggedIn(false);
           router.push('/login');
-
-          console.log('Succeeded in sign out');
         } else {
           console.log('Failed in sign out');
         }
@@ -52,13 +58,20 @@ function HeaderBase() {
       }
     };
 
-    if (isLoggedIn) {
+    if (isLoggedIn && currentUser) {
       return (
-        <MenuItem>
-          <Button color="inherit" onClick={handleSignOut}>
-            ログアウト
-          </Button>
-        </MenuItem>
+        <>
+          <MenuItem>
+            <Link href={`/users/${currentUser.id}`}>
+              <a>プロフィール</a>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Button color="inherit" onClick={handleSignOut}>
+              ログアウト
+            </Button>
+          </MenuItem>
+        </>
       );
     } else {
       return (
@@ -79,36 +92,62 @@ function HeaderBase() {
   };
 
   return (
-    <AppBar position="static" className={styles.module}>
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          <Link href="/">
-            <a>継コミュ！</a>
-          </Link>
-        </Typography>
-        <IconButton aria-controls="menu-appbar" aria-haspopup="true" onClick={handleMenu} color="inherit">
-          <AccountCircle />
-        </IconButton>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={open}
-          className={styles.authButtons}
-          onClose={handleClose}
-        >
-          <AuthButtons />
-        </Menu>
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar position="fixed" className={styles.module}>
+        <Toolbar className={classes.toolbar}>
+          <Typography variant="h6" className={classes.title}>
+            <Link href="/">
+              <a>継コミュ！</a>
+            </Link>
+          </Typography>
+          <IconButton color="inherit">
+            <Link href="/">
+              <a>
+                <HomeIcon />
+              </a>
+            </Link>
+          </IconButton>
+          <IconButton color="inherit">
+            <Link href="/teams">
+              <a>
+                <GroupIcon />
+              </a>
+            </Link>
+          </IconButton>
+          <IconButton color="inherit">
+            <Link href="/search">
+              <a>
+                <SearchIcon />
+              </a>
+            </Link>
+          </IconButton>
+          <IconButton aria-controls="menu-appbar" aria-haspopup="true" onClick={handleMenu} color="inherit">
+            <a>
+              <AccountCircleIcon />
+            </a>
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={open}
+            className={styles.authButtons}
+            onClose={handleClose}
+          >
+            <AuthButtons />
+          </Menu>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.offset} />
+    </>
   );
 }
 
