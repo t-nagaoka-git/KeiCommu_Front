@@ -34,7 +34,7 @@ export function Template() {
   const [password, setPassword] = React.useState<string>('');
   const [gender, setGender] = React.useState<string>('man');
 
-  const handleChnageGender = (e: React.MouseEvent<HTMLButtonElement>, value: any) => {
+  const handleChangeGender = (_e: React.MouseEvent<HTMLButtonElement>, value: any) => {
     if (value !== null) {
       setGender(value);
     }
@@ -52,15 +52,12 @@ export function Template() {
 
     try {
       const res = await signUp(params);
-      console.log(res);
 
+      // アカウント作成と同時にログイン
       if (res.status === 200) {
-        // アカウント作成と同時にログイン
         Cookies.set('_access_token', res.headers['access-token']);
         Cookies.set('_client', res.headers['client']);
         Cookies.set('_uid', res.headers['uid']);
-
-        console.log('Signed in successfully!');
       }
     } catch (err) {
       console.log(err);
@@ -112,7 +109,7 @@ export function Template() {
             size="small"
             value={gender}
             className={classes.toggle}
-            onChange={handleChnageGender}
+            onChange={handleChangeGender}
           >
             <ToggleButton value="man" className={classes.toggleBtn}>
               男性
