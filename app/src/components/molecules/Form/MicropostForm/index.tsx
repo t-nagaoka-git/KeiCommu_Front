@@ -1,11 +1,14 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
-import {useState, useContext} from 'react';
+import {Dispatch, SetStateAction, useState, useContext} from 'react';
+import {MicropostItem} from '@/interfaces/models/micropost';
 import {AuthContext} from '@/pages/_app';
+import {createMicropostParams} from '@/interfaces';
 import {createMicropost} from '@/apis/microposts';
 import {Card, CardContent, TextField, Button} from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
+    borderRadius: 0,
     padding: theme.spacing(2),
     maxWidth: 500,
   },
@@ -14,7 +17,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const MicropostForm = () => {
+type FormPropsType = {
+  micropostList: MicropostItem[];
+  setMicropostList: Dispatch<SetStateAction<MicropostItem[]>>;
+};
+
+const MicropostForm = ({micropostList, setMicropostList}: FormPropsType) => {
   const classes = useStyles();
   const [content, setContent] = useState<string>('');
   const {isLoggedIn, currentUser} = useContext(AuthContext);
@@ -26,14 +34,16 @@ const MicropostForm = () => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const params = {
+    const params: createMicropostParams = {
       content: content,
     };
 
     try {
-      const res = await createMicropost(currentUser.id, params);
-      console.log(res);
+      const res = await createMicropost(params);
+      const micropost: MicropostItem = res.data.micropost;
+      micropost.user = {id: currentUser.id, name: currentUser.name, image: currentUser.image};
       setContent('');
+      setMicropostList([res.data.micropost, ...micropostList]);
     } catch (err) {
       console.log(err);
     }
@@ -42,9 +52,9 @@ const MicropostForm = () => {
   return (
     <>
       {isLoggedIn && currentUser && (
-        <form noValidate autoComplete="off">
-          <Card className={classes.card}>
-            <CardContent>
+        <Card className={classes.card} variant="outlined">
+          <CardContent>
+            <form noValidate autoComplete="off">
               <TextField
                 value={content}
                 variant="outlined"
@@ -66,9 +76,9 @@ const MicropostForm = () => {
               >
                 つぶやく
               </Button>
-            </CardContent>
-          </Card>
-        </form>
+            </form>
+          </CardContent>
+        </Card>
       )}
     </>
   );
