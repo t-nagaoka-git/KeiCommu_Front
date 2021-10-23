@@ -1,8 +1,18 @@
-import {useContext} from 'react';
-import {AuthContext} from '@/pages/_app';
+import {MicropostItem} from '@/interfaces/models/micropost';
+import {Dispatch, SetStateAction} from 'react';
 import MicropostForm from '../molecules/Form/MicropostForm';
+import MicropostList from '../molecules/List/MicropostList';
 
-export function Template() {
-  const {isLoggedIn, currentUser} = useContext(AuthContext);
-  return <>{isLoggedIn && currentUser ? <MicropostForm /> : <h1>Not signed in</h1>}</>;
+type TemplatePropsType = {
+  micropostList: MicropostItem[] | [];
+  setMicropostList: Dispatch<SetStateAction<MicropostItem[]>>;
+};
+
+export function Template({micropostList, setMicropostList}: TemplatePropsType) {
+  return (
+    <>
+      <MicropostForm micropostList={micropostList} setMicropostList={setMicropostList} />
+      {0 < micropostList.length && <MicropostList micropostList={micropostList} />}
+    </>
+  );
 }
