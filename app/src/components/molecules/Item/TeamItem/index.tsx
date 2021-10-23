@@ -1,5 +1,5 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
-import {TeamItem} from '@/interfaces/models/team';
+import {TeamItem as ITeamItem} from '@/interfaces/models/team';
 import {Card, Box, Typography, Avatar, CardContent} from '@material-ui/core';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type ListPropsType = {
-  team: TeamItem;
+  team: ITeamItem;
 };
 
 const TeamItem = ({team}: ListPropsType) => {
