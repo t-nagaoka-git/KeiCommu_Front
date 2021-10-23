@@ -46,7 +46,6 @@ export function Template() {
 
     try {
       const res = await signIn(params);
-      console.log(res);
 
       if (res.status === 200) {
         Cookies.set('_access_token', res.headers['access-token']);
@@ -54,10 +53,7 @@ export function Template() {
         Cookies.set('_uid', res.headers['uid']);
 
         setIsLoggedIn(true);
-        console.log('setIsLoggedIn' + isLoggedIn);
         setCurrentUser(res.data.data);
-
-        console.log('Signed in successfully!');
 
         router.push('/');
       } else {
