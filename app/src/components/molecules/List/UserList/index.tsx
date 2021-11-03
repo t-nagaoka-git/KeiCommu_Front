@@ -5,11 +5,17 @@ import Link from 'next/link';
 
 const useStyles = makeStyles((theme: Theme) => ({
   list: {
-    marginTop: theme.spacing(1),
+    padding: 0,
     width: '100%',
     maxWidth: 500,
     backgroundColor: theme.palette.background.paper,
     border: '1px solid rgba(0, 0, 0, 0.12)',
+  },
+  listItem: {
+    padding: theme.spacing(2),
+  },
+  avatar: {
+    margin: 0,
   },
   inline: {
     display: 'inline',
@@ -27,8 +33,8 @@ const UserList = ({usersList}: ListPropsType) => {
     <List className={classes.list}>
       {usersList.map((user: User, index: number) => (
         <>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
+          <ListItem className={classes.listItem} alignItems="flex-start">
+            <ListItemAvatar className={classes.avatar}>
               <Link href={`/users/${user.id}`}>
                 <a>
                   <Avatar />
