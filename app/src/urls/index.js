@@ -21,3 +21,6 @@ export const createMicropostUrl = 'microposts';
 // teams
 export const getTeamDetailListUrl = 'teams/list';
 export const createTeamUrl = 'teams';
+export const searchTeamsUrl = (keyword) => {
+  return `teams/search?keyword=${keyword}`;
+};
