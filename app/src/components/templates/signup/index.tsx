@@ -73,22 +73,22 @@ export function Template() {
             variant="outlined"
             required
             fullWidth
-            label="名前"
-            value={name}
+            label="メールアドレス"
+            value={email}
             margin="dense"
             onChange={(event) => {
-              setName(event.target.value);
+              setEmail(event.target.value);
             }}
           />
           <TextField
             variant="outlined"
             required
             fullWidth
-            label="メールアドレス"
-            value={email}
+            label="名前"
+            value={name}
             margin="dense"
             onChange={(event) => {
-              setEmail(event.target.value);
+              setName(event.target.value);
             }}
           />
           <TextField
