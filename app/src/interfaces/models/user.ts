@@ -6,6 +6,7 @@ export interface User {
   name: string;
   nickname?: string;
   gender: number;
+  description: string;
   image?: string;
   allowPasswordChange: boolean;
   created_at: Date;
