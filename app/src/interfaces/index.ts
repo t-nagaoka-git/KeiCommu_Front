@@ -10,6 +10,12 @@ export interface SignInParams {
   password: string;
 }
 
+export interface editUserParams {
+  name: string;
+  email: string;
+  description: string;
+}
+
 export interface createMicropostParams {
   content: string;
 }

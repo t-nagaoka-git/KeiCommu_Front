@@ -5,6 +5,7 @@ export const signUpUrl = 'auth';
 export const signInUrl = 'auth/sign_in';
 export const signOutUrl = 'auth/sign_out';
 export const getCurrentUserUrl = 'auth/sessions';
+export const editUserUrl = 'auth';
 
 // users
 export const getUserUrl = (id) => {
