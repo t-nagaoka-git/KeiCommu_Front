@@ -1,7 +1,8 @@
-import {User} from '@/interfaces/models/user';
 import {makeStyles, Theme} from '@material-ui/core/styles';
-import React from 'react';
+import {User} from '@/interfaces/models/user';
+import {Dispatch, SetStateAction, useState} from 'react';
 import {Card, CardHeader, Avatar, Button, CardContent, Box} from '@material-ui/core';
+import UserEditDialog from '@/components/molecules/Dialog/UserEditDialog';
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
@@ -49,25 +50,44 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 type ProfilePropsType = {
+  currentUser: User;
+  setCurrentUser: Dispatch<SetStateAction<User>>;
   user: User | null;
+  setUser: Dispatch<SetStateAction<User>>;
 };
 
-const Profile = ({user}: ProfilePropsType) => {
+const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType) => {
   const classes = useStyles();
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+
+  const handleEditDialog = () => {
+    setOpenEditDialog(true);
+  };
 
   return (
     <Card className={classes.card} variant="outlined">
       <CardHeader
         avatar={<Avatar className={classes.avatar} />}
         action={
-          <Button variant="contained" color="primary" className={classes.btn}>
-            プロフィールを編集
-          </Button>
+          user.id == currentUser.id && (
+            <>
+              <Button className={classes.btn} variant="contained" color="primary" onClick={handleEditDialog}>
+                プロフィールを編集
+              </Button>
+              <UserEditDialog
+                open={openEditDialog}
+                setOpen={setOpenEditDialog}
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+                setUser={setUser}
+              />
+            </>
+          )
         }
       />
       <CardContent>
         <h3 className={classes.heading}>{user.name}</h3>
-        <span className={classes.subheader}>ここに紹介文を入れる予定</span>
+        <span className={classes.subheader}>{user.description}</span>
         <Box display={'flex'} className={classes.relation}>
           <Box className={classes.following}>
             <span className={classes.statValue}>12</span>

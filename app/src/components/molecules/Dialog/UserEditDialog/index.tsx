@@ -29,9 +29,10 @@ type DialoggPropsType = {
   setOpen: Dispatch<SetStateAction<boolean>>;
   currentUser: User;
   setCurrentUser: Dispatch<SetStateAction<User>>;
+  setUser: Dispatch<SetStateAction<User>>;
 };
 
-const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser}: DialoggPropsType) => {
+const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, setUser}: DialoggPropsType) => {
   const classes = useStyles();
   const [name, setName] = useState<string>(currentUser.name);
   const [email, setEmail] = useState<string>(currentUser.email);
@@ -53,8 +54,9 @@ const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser}: DialoggPro
 
     try {
       const res = await editUser(params);
-      const user: User = res.data.user;
+      const user: User = res.data.data;
       setCurrentUser(user);
+      setUser(user);
       setOpen(false);
     } catch (err) {
       console.log(err);

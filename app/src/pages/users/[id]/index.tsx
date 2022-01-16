@@ -1,5 +1,6 @@
 import {useRouter} from 'next/router';
-import {useState, useEffect} from 'react';
+import {AuthContext} from '../../_app';
+import {useState, useContext, useEffect} from 'react';
 import {User} from '@/interfaces/models/user';
 import {MicropostItem} from '@/interfaces/models/micropost';
 import {getUser} from '@/apis/users';
@@ -9,6 +10,7 @@ import Loading from '@/components/atoms/Loading';
 
 export default function Page() {
   const router = useRouter();
+  const {currentUser, setCurrentUser} = useContext(AuthContext);
   const [user, setUser] = useState<User>(null);
   const [micropostList, setMicropostList] = useState<MicropostItem[]>([]);
 
@@ -36,5 +38,19 @@ export default function Page() {
     handleGetMicroposts();
   }, []);
 
-  return <>{user && micropostList ? <Template user={user} micropostList={micropostList} /> : <Loading />}</>;
+  return (
+    <>
+      {user && micropostList ? (
+        <Template
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          user={user}
+          setUser={setUser}
+          micropostList={micropostList}
+        />
+      ) : (
+        <Loading />
+      )}
+    </>
+  );
 }
