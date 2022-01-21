@@ -1,7 +1,7 @@
 import {useRouter} from 'next/router';
 import {AuthContext} from '../../_app';
 import {useState, useContext, useEffect} from 'react';
-import {User} from '@/interfaces/models/user';
+import {Profile} from '@/interfaces/models/user';
 import {MicropostItem} from '@/interfaces/models/micropost';
 import {getUser} from '@/apis/users';
 import {indexMicropost} from '@/apis/microposts';
@@ -11,7 +11,7 @@ import Loading from '@/components/atoms/Loading';
 export default function Page() {
   const router = useRouter();
   const {currentUser, setCurrentUser} = useContext(AuthContext);
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<Profile>(null);
   const [micropostList, setMicropostList] = useState<MicropostItem[]>([]);
 
   const id = Number(router.query.id);

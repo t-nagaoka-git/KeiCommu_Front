@@ -1,6 +1,6 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import {Dispatch, SetStateAction, useState} from 'react';
-import {User} from '@/interfaces/models/user';
+import {User, Profile} from '@/interfaces/models/user';
 import {editUserParams} from '@/interfaces';
 import {editUser} from '@/apis/auth';
 import {Button, Dialog, DialogContent, InputLabel, TextField, DialogActions} from '@material-ui/core';
@@ -29,10 +29,11 @@ type DialoggPropsType = {
   setOpen: Dispatch<SetStateAction<boolean>>;
   currentUser: User;
   setCurrentUser: Dispatch<SetStateAction<User>>;
-  setUser: Dispatch<SetStateAction<User>>;
+  user: Profile;
+  setUser: Dispatch<SetStateAction<Profile>>;
 };
 
-const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, setUser}: DialoggPropsType) => {
+const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, user, setUser}: DialoggPropsType) => {
   const classes = useStyles();
   const [name, setName] = useState<string>(currentUser.name);
   const [email, setEmail] = useState<string>(currentUser.email);
@@ -54,9 +55,9 @@ const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, setUser}: D
 
     try {
       const res = await editUser(params);
-      const user: User = res.data.data;
-      setCurrentUser(user);
-      setUser(user);
+      const userData: User = res.data.data;
+      setCurrentUser(userData);
+      setUser({...user, ...params});
       setOpen(false);
     } catch (err) {
       console.log(err);

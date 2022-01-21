@@ -1,4 +1,4 @@
-import {User} from '@/interfaces/models/user';
+import {User, Profile as IProfile} from '@/interfaces/models/user';
 import {MicropostItem} from '@/interfaces/models/micropost';
 import {Dispatch, SetStateAction} from 'react';
 import Profile from '@/components/molecules/Profile';
@@ -7,8 +7,8 @@ import MicropostList from '@/components/molecules/List/MicropostList';
 type TemplatePropsType = {
   currentUser: User;
   setCurrentUser: Dispatch<SetStateAction<User>>;
-  user: User | null;
-  setUser: Dispatch<SetStateAction<User>>;
+  user: IProfile | null;
+  setUser: Dispatch<SetStateAction<IProfile>>;
   micropostList: MicropostItem[] | [];
 };
 

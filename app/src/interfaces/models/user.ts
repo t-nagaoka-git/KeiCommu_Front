@@ -12,3 +12,14 @@ export interface User {
   created_at: Date;
   updated_at: Date;
 }
+
+export interface Profile {
+  id: number;
+  name: string;
+  image?: string;
+  email: string;
+  gender: string;
+  description: string;
+  friendsCount: number;
+  followersCount: number;
+}

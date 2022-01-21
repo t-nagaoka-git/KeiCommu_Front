@@ -1,5 +1,5 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
-import {User} from '@/interfaces/models/user';
+import {User, Profile as IProfile} from '@/interfaces/models/user';
 import {Dispatch, SetStateAction, useState} from 'react';
 import {Card, CardHeader, Avatar, Button, CardContent, Box} from '@material-ui/core';
 import UserEditDialog from '@/components/molecules/Dialog/UserEditDialog';
@@ -52,8 +52,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 type ProfilePropsType = {
   currentUser: User;
   setCurrentUser: Dispatch<SetStateAction<User>>;
-  user: User | null;
-  setUser: Dispatch<SetStateAction<User>>;
+  user: IProfile | null;
+  setUser: Dispatch<SetStateAction<IProfile>>;
 };
 
 const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType) => {
@@ -79,6 +79,7 @@ const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType)
                 setOpen={setOpenEditDialog}
                 currentUser={currentUser}
                 setCurrentUser={setCurrentUser}
+                user={user}
                 setUser={setUser}
               />
             </>
@@ -90,11 +91,11 @@ const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType)
         <span className={classes.subheader}>{user.description}</span>
         <Box display={'flex'} className={classes.relation}>
           <Box className={classes.following}>
-            <span className={classes.statValue}>12</span>
+            <span className={classes.statValue}>{user.friendsCount}</span>
             <span className={classes.statLabel}>フォロー中</span>
           </Box>
           <Box>
-            <span className={classes.statValue}>6941</span>
+            <span className={classes.statValue}>{user.followersCount}</span>
             <span className={classes.statLabel}>フォロワー</span>
           </Box>
         </Box>
