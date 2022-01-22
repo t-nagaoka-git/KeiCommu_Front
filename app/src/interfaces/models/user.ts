@@ -20,6 +20,7 @@ export interface Profile {
   email: string;
   gender: string;
   description: string;
+  following: boolean;
   friendsCount: number;
   followersCount: number;
 }

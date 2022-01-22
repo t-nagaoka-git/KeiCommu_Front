@@ -58,10 +58,17 @@ type ProfilePropsType = {
 
 const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType) => {
   const classes = useStyles();
+  const [following, setFollowing] = useState(user.following);
   const [openEditDialog, setOpenEditDialog] = useState(false);
 
   const handleEditDialog = () => {
     setOpenEditDialog(true);
+  };
+  const handleFollow = () => {
+    setFollowing(true);
+  };
+  const handleUnfollow = () => {
+    setFollowing(false);
   };
 
   return (
@@ -69,7 +76,7 @@ const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType)
       <CardHeader
         avatar={<Avatar className={classes.avatar} />}
         action={
-          user.id == currentUser.id && (
+          user.id == currentUser.id ? (
             <>
               <Button className={classes.btn} variant="contained" color="primary" onClick={handleEditDialog}>
                 プロフィールを編集
@@ -82,6 +89,18 @@ const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType)
                 user={user}
                 setUser={setUser}
               />
+            </>
+          ) : (
+            <>
+              {following ? (
+                <Button className={classes.btn} variant="contained" color="primary" onClick={handleUnfollow}>
+                  フォロー解除
+                </Button>
+              ) : (
+                <Button className={classes.btn} variant="contained" color="primary" onClick={handleFollow}>
+                  フォロー
+                </Button>
+              )}
             </>
           )
         }
