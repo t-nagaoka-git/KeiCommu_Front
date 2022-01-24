@@ -1,6 +1,8 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import {User, Profile as IProfile} from '@/interfaces/models/user';
 import {Dispatch, SetStateAction, useState} from 'react';
+import {createRelationshipParams, destroyRelationshipParams} from '@/interfaces';
+import {createRelationship, destroyRelationship} from '@/apis/relationships';
 import {Card, CardHeader, Avatar, Button, CardContent, Box} from '@material-ui/core';
 import UserEditDialog from '@/components/molecules/Dialog/UserEditDialog';
 
@@ -58,17 +60,36 @@ type ProfilePropsType = {
 
 const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType) => {
   const classes = useStyles();
-  const [following, setFollowing] = useState(user.following);
   const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [following, setFollowing] = useState(user.following);
+  const [followersCount, setFollowersCount] = useState(user.followersCount);
 
   const handleEditDialog = () => {
     setOpenEditDialog(true);
   };
-  const handleFollow = () => {
-    setFollowing(true);
+  const handleFollow = async () => {
+    try {
+      const params: createRelationshipParams = {
+        followed_id: user.id,
+      };
+      await createRelationship(params);
+      setFollowing(true);
+      setFollowersCount(followersCount + 1);
+    } catch (err) {
+      console.log(err);
+    }
   };
-  const handleUnfollow = () => {
-    setFollowing(false);
+  const handleUnfollow = async () => {
+    try {
+      const params: destroyRelationshipParams = {
+        followed_id: user.id,
+      };
+      await destroyRelationship(params);
+      setFollowing(false);
+      setFollowersCount(followersCount - 1);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -114,7 +135,7 @@ const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType)
             <span className={classes.statLabel}>フォロー中</span>
           </Box>
           <Box>
-            <span className={classes.statValue}>{user.followersCount}</span>
+            <span className={classes.statValue}>{followersCount}</span>
             <span className={classes.statLabel}>フォロワー</span>
           </Box>
         </Box>

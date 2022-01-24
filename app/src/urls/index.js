@@ -15,6 +15,10 @@ export const searchUsersUrl = (keyword) => {
   return `users/search?keyword=${keyword}`;
 };
 
+// relationships
+export const createRelationshipUrl = 'relationships/create';
+export const destroyRelationshipUrl = 'relationships/destroy';
+
 // microposts
 export const indexMicropostUrl = 'microposts';
 export const createMicropostUrl = 'microposts';

@@ -16,6 +16,14 @@ export interface editUserParams {
   description: string;
 }
 
+export interface createRelationshipParams {
+  followed_id: number;
+}
+
+export interface destroyRelationshipParams {
+  followed_id: number;
+}
+
 export interface createMicropostParams {
   content: string;
 }
