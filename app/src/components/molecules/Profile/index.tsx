@@ -5,6 +5,7 @@ import {createRelationshipParams, destroyRelationshipParams} from '@/interfaces'
 import {createRelationship, destroyRelationship} from '@/apis/relationships';
 import {Card, CardHeader, Avatar, Button, CardContent, Box} from '@material-ui/core';
 import UserEditDialog from '@/components/molecules/Dialog/UserEditDialog';
+import Link from 'next/link';
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
@@ -131,12 +132,20 @@ const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType)
         <span className={classes.subheader}>{user.description}</span>
         <Box display={'flex'} className={classes.relation}>
           <Box className={classes.following}>
-            <span className={classes.statValue}>{user.friendsCount}</span>
-            <span className={classes.statLabel}>フォロー中</span>
+            <Link href={`/users/${user.id}/following`}>
+              <a>
+                <span className={classes.statValue}>{user.friendsCount}</span>
+                <span className={classes.statLabel}>フォロー中</span>
+              </a>
+            </Link>
           </Box>
           <Box>
-            <span className={classes.statValue}>{followersCount}</span>
-            <span className={classes.statLabel}>フォロワー</span>
+            <Link href={`/users/${user.id}/followers`}>
+              <a>
+                <span className={classes.statValue}>{followersCount}</span>
+                <span className={classes.statLabel}>フォロワー</span>
+              </a>
+            </Link>
           </Box>
         </Box>
       </CardContent>

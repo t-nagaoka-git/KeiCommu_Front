@@ -14,6 +14,12 @@ export const getUserUrl = (id) => {
 export const searchUsersUrl = (keyword) => {
   return `users/search?keyword=${keyword}`;
 };
+export const getFollowListUrl = (id) => {
+  return `users/${id}/following`;
+};
+export const getFollowerListUrl = (id) => {
+  return `users/${id}/followers`;
+};
 
 // relationships
 export const createRelationshipUrl = 'relationships/create';
