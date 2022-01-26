@@ -34,14 +34,14 @@ const UserList = ({usersList}: ListPropsType) => {
       {usersList.map((user: User, index: number) => (
         <>
           <ListItem className={classes.listItem} alignItems="flex-start">
-            <ListItemAvatar className={classes.avatar}>
-              <Link href={`/users/${user.id}`}>
-                <a>
+            <Link href={`/users/${user.id}`}>
+              <a>
+                <ListItemAvatar className={classes.avatar}>
                   <Avatar />
-                </a>
-              </Link>
-            </ListItemAvatar>
-            <ListItemText primary={user.name} className={classes.inline} />
+                </ListItemAvatar>
+              </a>
+            </Link>
+            <ListItemText primary={user.name} secondary={user.description} className={classes.inline} />
           </ListItem>
           {usersList.length != index + 1 && <Divider />}
         </>
