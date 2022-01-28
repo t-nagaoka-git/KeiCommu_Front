@@ -1,7 +1,19 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import {User} from '@/interfaces/models/user';
-import {List, ListItem, ListItemAvatar, Avatar, ListItemText, Divider} from '@material-ui/core';
+import {useState} from 'react';
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  ListItemSecondaryAction,
+  Button,
+  Divider,
+} from '@material-ui/core';
 import Link from 'next/link';
+import {createRelationshipParams, destroyRelationshipParams} from '@/interfaces';
+import {createRelationship, destroyRelationship} from '@/apis/relationships';
 
 const useStyles = makeStyles((theme: Theme) => ({
   list: {
@@ -29,6 +41,47 @@ type ListPropsType = {
 const UserList = ({usersList}: ListPropsType) => {
   const classes = useStyles();
 
+  const RelationshipButton = (props: {user_id: number; following: boolean}) => {
+    const [followFlag, setFollowFlag] = useState(props.following);
+
+    const handleFollow = async () => {
+      try {
+        const params: createRelationshipParams = {
+          followed_id: props.user_id,
+        };
+        await createRelationship(params);
+        setFollowFlag(true);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const handleUnfollow = async () => {
+      try {
+        const params: destroyRelationshipParams = {
+          followed_id: props.user_id,
+        };
+        await destroyRelationship(params);
+        setFollowFlag(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    return (
+      <>
+        {followFlag ? (
+          <Button variant="contained" color="primary" onClick={handleUnfollow}>
+            フォロー解除
+          </Button>
+        ) : (
+          <Button variant="contained" color="primary" onClick={handleFollow}>
+            フォロー
+          </Button>
+        )}
+      </>
+    );
+  };
+
   return (
     <List className={classes.list}>
       {usersList.map((user: User, index: number) => (
@@ -42,6 +95,7 @@ const UserList = ({usersList}: ListPropsType) => {
               </a>
             </Link>
             <ListItemText primary={user.name} secondary={user.description} className={classes.inline} />
+            <RelationshipButton user_id={user.id} following={user.following} />
           </ListItem>
           {usersList.length != index + 1 && <Divider />}
         </>
