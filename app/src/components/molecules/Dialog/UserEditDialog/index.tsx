@@ -3,12 +3,22 @@ import {Dispatch, SetStateAction, useState} from 'react';
 import {User, Profile} from '@/interfaces/models/user';
 import {editUserParams} from '@/interfaces';
 import {editUser} from '@/apis/auth';
-import {Button, Dialog, DialogContent, InputLabel, TextField, DialogActions} from '@material-ui/core';
+import {Button, Dialog, DialogContent, Avatar, InputLabel, TextField, DialogActions} from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialog: {
     maxWidth: 500,
     margin: 'auto',
+  },
+  input: {
+    display: 'none',
+  },
+  avatar: {
+    width: 90,
+    height: 90,
+    cursor: 'pointer',
+    margin: 'auto',
+    marginBottom: theme.spacing(2),
   },
   inputLabel: {
     marginTop: theme.spacing(1),
@@ -70,6 +80,10 @@ const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, user, setUs
       <Dialog className={classes.dialog} open={open} onClose={handleClose} fullWidth>
         <form noValidate autoComplete="off">
           <DialogContent>
+            <label htmlFor="icon-button-file">
+              <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+              <Avatar className={classes.avatar} />
+            </label>
             <InputLabel className={classes.inputLabel}>メールアドレス</InputLabel>
             <TextField
               variant="outlined"
