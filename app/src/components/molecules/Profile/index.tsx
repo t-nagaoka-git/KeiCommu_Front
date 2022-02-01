@@ -96,7 +96,7 @@ const Profile = ({currentUser, setCurrentUser, user, setUser}: ProfilePropsType)
   return (
     <Card className={classes.card} variant="outlined">
       <CardHeader
-        avatar={<Avatar className={classes.avatar} />}
+        avatar={<Avatar src={user.image} className={classes.avatar} />}
         action={
           user.id == currentUser.id ? (
             <>

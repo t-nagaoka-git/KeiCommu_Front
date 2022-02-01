@@ -1,5 +1,5 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
-import {Dispatch, SetStateAction, useState} from 'react';
+import {Dispatch, SetStateAction, useState, useCallback} from 'react';
 import {User, Profile} from '@/interfaces/models/user';
 import {editUserParams} from '@/interfaces';
 import {editUser} from '@/apis/auth';
@@ -48,8 +48,21 @@ const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, user, setUs
   const [name, setName] = useState<string>(currentUser.name);
   const [email, setEmail] = useState<string>(currentUser.email);
   const [description, setDescription] = useState<string>(currentUser.description);
+  const [image, setImage] = useState<File>();
+  const [preview, setPreview] = useState<string>('');
+
+  const uploadImage = useCallback((e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  }, []);
+  const previewImage = useCallback((e) => {
+    const file = e.target.files[0];
+    setPreview(window.URL.createObjectURL(file));
+  }, []);
 
   const handleClose = () => {
+    setImage(undefined);
+    setPreview('');
     setOpen(false);
   };
   const handleUserEditBtnClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -59,6 +72,7 @@ const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, user, setUs
 
     const params: editUserParams = {
       name: name,
+      image: image,
       email: email,
       description: description,
     };
@@ -67,7 +81,15 @@ const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, user, setUs
       const res = await editUser(params);
       const userData: User = res.data.data;
       setCurrentUser(userData);
-      setUser({...user, ...params});
+      setUser({
+        ...user,
+        name: name,
+        email: email,
+        description: description,
+        image: preview ? preview : user.image,
+      });
+      setImage(undefined);
+      setPreview('');
       setOpen(false);
     } catch (err) {
       console.log(err);
@@ -81,8 +103,21 @@ const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, user, setUs
         <form noValidate autoComplete="off">
           <DialogContent>
             <label htmlFor="icon-button-file">
-              <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
-              <Avatar className={classes.avatar} />
+              <input
+                accept="image/*"
+                className={classes.input}
+                id="icon-button-file"
+                type="file"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  uploadImage(e);
+                  previewImage(e);
+                }}
+              />
+              {preview ? (
+                <Avatar src={preview} className={classes.avatar} />
+              ) : (
+                <Avatar src={user.image} className={classes.avatar} />
+              )}
             </label>
             <InputLabel className={classes.inputLabel}>メールアドレス</InputLabel>
             <TextField

@@ -12,6 +12,7 @@ export interface SignInParams {
 
 export interface editUserParams {
   name: string;
+  image: File;
   email: string;
   description: string;
 }
