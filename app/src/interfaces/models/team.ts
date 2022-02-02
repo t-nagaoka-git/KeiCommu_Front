@@ -21,6 +21,8 @@ export interface TeamItem {
   users: {
     id: number;
     name: string;
-    image: string;
+    image?: {
+      url: string;
+    };
   }[];
 }

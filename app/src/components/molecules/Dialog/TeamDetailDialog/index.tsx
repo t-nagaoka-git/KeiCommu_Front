@@ -77,7 +77,7 @@ const TeamDetailDialog = ({open, setOpen, setSelectTeam, team, currentUser}: Dia
         {team.users && (
           <AvatarGroup className={classes.avatarGroup} max={5}>
             {team.users.map((user) => (
-              <Avatar className={classes.avatar} />
+              <Avatar className={classes.avatar} src={user.image.url} />
             ))}
           </AvatarGroup>
         )}

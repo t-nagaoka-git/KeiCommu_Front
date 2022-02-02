@@ -15,6 +15,8 @@ export interface MicropostItem {
   user: {
     id: number;
     name: string;
-    image: string;
+    image?: {
+      url: string;
+    };
   };
 }

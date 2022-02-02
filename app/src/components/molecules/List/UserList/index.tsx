@@ -90,7 +90,7 @@ const UserList = ({usersList}: ListPropsType) => {
             <Link href={`/users/${user.id}`}>
               <a>
                 <ListItemAvatar className={classes.avatar}>
-                  <Avatar />
+                  <Avatar src={user.image.url} />
                 </ListItemAvatar>
               </a>
             </Link>

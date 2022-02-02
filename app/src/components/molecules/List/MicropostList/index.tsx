@@ -31,7 +31,7 @@ const MicropostList = ({micropostList}: ListPropsType) => {
             <ListItemAvatar>
               <Link href={`/users/${micropost.user.id}`}>
                 <a>
-                  <Avatar />
+                  <Avatar src={micropost.user.image.url} />
                 </a>
               </Link>
             </ListItemAvatar>
