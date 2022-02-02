@@ -1,7 +1,6 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import {Dispatch, SetStateAction, useState, useCallback} from 'react';
 import {User, Profile} from '@/interfaces/models/user';
-import {editUserParams} from '@/interfaces';
 import {editUser} from '@/apis/auth';
 import {Button, Dialog, DialogContent, Avatar, InputLabel, TextField, DialogActions} from '@material-ui/core';
 
@@ -70,15 +69,14 @@ const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, user, setUs
 
     if (!currentUser) return;
 
-    const params: editUserParams = {
-      name: name,
-      image: image,
-      email: email,
-      description: description,
-    };
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('description', description);
+    if (image) formData.append('image', image);
 
     try {
-      const res = await editUser(params);
+      const res = await editUser(formData);
       const userData: User = res.data.data;
       setCurrentUser(userData);
       setUser({
@@ -86,7 +84,7 @@ const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, user, setUs
         name: name,
         email: email,
         description: description,
-        image: preview ? preview : user.image,
+        image: {url: preview ? preview : user.image.url},
       });
       setImage(undefined);
       setPreview('');
@@ -116,7 +114,7 @@ const UserEditDialog = ({open, setOpen, currentUser, setCurrentUser, user, setUs
               {preview ? (
                 <Avatar src={preview} className={classes.avatar} />
               ) : (
-                <Avatar src={user.image} className={classes.avatar} />
+                <Avatar src={user.image.url} className={classes.avatar} />
               )}
             </label>
             <InputLabel className={classes.inputLabel}>メールアドレス</InputLabel>

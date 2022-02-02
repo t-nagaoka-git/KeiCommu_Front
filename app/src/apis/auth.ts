@@ -1,7 +1,7 @@
 import {signUpUrl, signInUrl, signOutUrl, getCurrentUserUrl, editUserUrl} from '@/urls';
 import client from '@/lib/client';
 import Cookies from 'js-cookie';
-import {SignUpParams, SignInParams, editUserParams} from '@/interfaces/index';
+import {SignUpParams, SignInParams} from '@/interfaces/index';
 
 // サインアップ（新規アカウント作成）
 export const signUp = (params: SignUpParams) => {
@@ -37,6 +37,6 @@ export const getCurrentUser = () => {
 };
 
 // ユーザー編集
-export const editUser = (params: editUserParams) => {
+export const editUser = (params: FormData) => {
   return client.patch(editUserUrl, params);
 };

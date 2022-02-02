@@ -1,7 +1,9 @@
 export interface User {
   id: number;
   name: string;
-  image?: string;
+  image?: {
+    url: string;
+  };
   email: string;
   gender: number;
   description: string;
@@ -11,7 +13,9 @@ export interface User {
 export interface Profile {
   id: number;
   name: string;
-  image?: string;
+  image?: {
+    url: string;
+  };
   email: string;
   gender: string;
   description: string;

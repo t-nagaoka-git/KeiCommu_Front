@@ -10,13 +10,6 @@ export interface SignInParams {
   password: string;
 }
 
-export interface editUserParams {
-  name: string;
-  image: File;
-  email: string;
-  description: string;
-}
-
 export interface createRelationshipParams {
   followed_id: number;
 }
