@@ -1,7 +1,7 @@
 import {useContext, useState, useEffect} from 'react';
 import {AuthContext} from '@/pages/_app';
 import {MicropostItem} from '@/interfaces/models/micropost';
-import {indexMicropost} from '@/apis/microposts';
+import {getTimeline} from '@/apis/microposts';
 import {Template} from '@/components/templates';
 
 export default function Page() {
@@ -11,7 +11,7 @@ export default function Page() {
   const handleGetMicroposts = async () => {
     if (isLoggedIn && currentUser) {
       try {
-        const res = await indexMicropost();
+        const res = await getTimeline();
         setMicropostList(res.data.microposts);
       } catch (err) {
         console.log(err);

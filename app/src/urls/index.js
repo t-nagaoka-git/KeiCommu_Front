@@ -27,6 +27,7 @@ export const destroyRelationshipUrl = 'relationships/destroy';
 
 // microposts
 export const indexMicropostUrl = 'microposts';
+export const getTimelineUrl = 'microposts/timeline';
 export const createMicropostUrl = 'microposts';
 
 // teams
