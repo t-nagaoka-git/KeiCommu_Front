@@ -5,6 +5,7 @@ import {User} from '@/interfaces/models/user';
 import {Button} from '@material-ui/core';
 import TeamCreateDialog from '@/components/molecules/Dialog/TeamCreateDialog';
 import styles from './styles.module.css';
+import Link from 'next/link';
 import TeamItem from '@/components/molecules/Item/TeamItem';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -47,9 +48,13 @@ export function Template({teamList, setTeamList, currentUser}: TemplatePropsType
         currentUser={currentUser}
       />
       {teamList.map((team: ITeamItem) => (
-        <div className={styles.teamItem}>
-          <TeamItem team={team} />
-        </div>
+        <Link href={`/teams/${team.id}`}>
+          <a>
+            <div className={styles.teamItem}>
+              <TeamItem team={team} />
+            </div>
+          </a>
+        </Link>
       ))}
     </>
   );
