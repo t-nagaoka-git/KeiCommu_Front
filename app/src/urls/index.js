@@ -36,3 +36,8 @@ export const createTeamUrl = 'teams';
 export const searchTeamsUrl = (keyword) => {
   return `teams/search?keyword=${keyword}`;
 };
+
+// teamMessages
+export const getTeamMessageListUrl = (id) => {
+  return `teams/${id}/team_messages`;
+};
