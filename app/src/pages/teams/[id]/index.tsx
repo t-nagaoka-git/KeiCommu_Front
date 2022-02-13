@@ -25,5 +25,12 @@ export default function Page() {
     GetTeamMessageList();
   }, []);
 
-  return <Template teamMessageList={teamMessageList} currentUser={currentUser} />;
+  return (
+    <Template
+      teamId={id}
+      teamMessageList={teamMessageList}
+      setTeamMessageList={setTeamMessageList}
+      currentUser={currentUser}
+    />
+  );
 }

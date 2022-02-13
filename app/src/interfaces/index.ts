@@ -29,3 +29,7 @@ export interface createTeamParams {
   genderRestriction: string;
   autoExitGracePeriod: number;
 }
+
+export interface createTeamMessageParams {
+  content: string;
+}
