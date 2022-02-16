@@ -1,4 +1,5 @@
 export const baseUrl = 'http://localhost:3000/api/v1';
+export const cableUrl = 'http://localhost:3000/cable';
 
 // auth
 export const signUpUrl = 'auth';
