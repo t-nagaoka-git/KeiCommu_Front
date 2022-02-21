@@ -5,6 +5,8 @@ import {Dispatch, SetStateAction} from 'react';
 import {Paper} from '@material-ui/core';
 import ChatMessageList from '@/components/molecules/List/ChatMessageList';
 import ChatForm from '@/components/molecules/Form/ChatForm';
+import dynamic from 'next/dynamic';
+const Cable = dynamic(() => import('@/components/atoms/Cable'), {ssr: false});
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -20,24 +22,32 @@ const useStyles = makeStyles(() =>
 );
 
 type TemplatePropsType = {
+  currentUser: User;
   teamId: number;
   teamMessageList: TeamMessageItem[] | [];
-  setTeamMessageList: Dispatch<SetStateAction<TeamMessageItem[]>>;
-  currentUser: User;
+  getTeamMessageList: () => Promise<void>;
+  setReceivedTeamMessage: Dispatch<SetStateAction<TeamMessageItem>>;
 };
 
-export function Template({teamId, teamMessageList, setTeamMessageList, currentUser}: TemplatePropsType) {
+export function Template({
+  currentUser,
+  teamId,
+  teamMessageList,
+  getTeamMessageList,
+  setReceivedTeamMessage,
+}: TemplatePropsType) {
   const classes = useStyles();
   return (
     <Paper className={classes.paper} elevation={2}>
-      <Paper className={classes.messagesBody}>
+      <Paper id="teamMessageList" className={classes.messagesBody}>
         <ChatMessageList teamMessageList={teamMessageList} currentUser={currentUser} />
       </Paper>
-      <ChatForm
-        teamId={teamId}
-        currentUser={currentUser}
-        teamMessageList={teamMessageList}
-        setTeamMessageList={setTeamMessageList}
+      <ChatForm teamId={teamId} />
+      <Cable
+        channelName="TeamRoomsChannel"
+        id={teamId}
+        getDataList={getTeamMessageList}
+        setReceivedData={setReceivedTeamMessage}
       />
     </Paper>
   );

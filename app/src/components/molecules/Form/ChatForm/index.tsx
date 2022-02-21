@@ -1,7 +1,5 @@
 import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
-import {User} from '@/interfaces/models/user';
-import {TeamMessageItem} from '@/interfaces/models/teamMessage';
-import {Dispatch, SetStateAction, useState} from 'react';
+import {useState} from 'react';
 import {createTeamMessageParams} from '@/interfaces';
 import {createTeamMessage} from '@/apis/teamMessages';
 import {TextField, Button} from '@material-ui/core';
@@ -23,12 +21,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type FormPropsType = {
   teamId: number;
-  currentUser: User;
-  teamMessageList: TeamMessageItem[];
-  setTeamMessageList: Dispatch<SetStateAction<TeamMessageItem[]>>;
 };
 
-const ChatForm = ({teamId, currentUser, teamMessageList, setTeamMessageList}: FormPropsType) => {
+const ChatForm = ({teamId}: FormPropsType) => {
   const classes = useStyles();
   const [content, setContent] = useState<string>('');
 
@@ -44,10 +39,7 @@ const ChatForm = ({teamId, currentUser, teamMessageList, setTeamMessageList}: Fo
     };
 
     try {
-      const res = await createTeamMessage(teamId, params);
-      const teamMessage: TeamMessageItem = res.data.teamMessage;
-      teamMessage.user = {id: currentUser.id, name: currentUser.name, image: currentUser.image};
-      setTeamMessageList([...teamMessageList, teamMessage]);
+      await createTeamMessage(teamId, params);
       setContent('');
     } catch (err) {
       console.log(err);

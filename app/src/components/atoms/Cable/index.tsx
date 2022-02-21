@@ -5,19 +5,20 @@ import {cableUrl} from '@/urls';
 type CablePropsType<T> = {
   channelName: string;
   id: number;
-  dataList: T[];
-  setDataList: Dispatch<SetStateAction<T[]>>;
+  getDataList: () => Promise<void>;
+  setReceivedData: Dispatch<SetStateAction<T>>;
 };
 
-const Cable = <T,>({channelName, id, dataList, setDataList}: CablePropsType<T>) => {
+const Cable = <T,>({channelName, id, getDataList, setReceivedData}: CablePropsType<T>) => {
   const cable = actionCable.createConsumer(cableUrl);
 
   useEffect(() => {
+    getDataList();
     cable.subscriptions.create(
       {channel: channelName, id: id},
       {
-        received: (teamMessage: T) => {
-          setDataList([...dataList, teamMessage]);
+        received: (data: T) => {
+          setReceivedData(data);
         },
       }
     );
