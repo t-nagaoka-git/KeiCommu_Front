@@ -2,6 +2,8 @@ import {makeStyles, Theme} from '@material-ui/core/styles';
 import {Dispatch, SetStateAction} from 'react';
 import {TeamItem} from '@/interfaces/models/team';
 import {User} from '@/interfaces/models/user';
+import {useRouter} from 'next/router';
+import {joinTeam} from '@/apis/teamUsers';
 import {Dialog, Box, Typography, Avatar, DialogContent, Divider, DialogActions, Button} from '@material-ui/core';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import moment from 'moment';
@@ -56,16 +58,22 @@ type DialoggPropsType = {
 
 const TeamDetailDialog = ({open, setOpen, setSelectTeam, team, currentUser}: DialoggPropsType) => {
   const classes = useStyles();
+  const router = useRouter();
 
   const handleClose = () => {
     setSelectTeam(null);
     setOpen(false);
   };
 
-  const handleTeamJoinBtnClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
+  const handleTeamJoinBtnClick = async (teamId: number) => {
     if (!currentUser) return;
+
+    try {
+      await joinTeam(teamId);
+      router.push(`teams/${teamId}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -132,7 +140,7 @@ const TeamDetailDialog = ({open, setOpen, setSelectTeam, team, currentUser}: Dia
             size="large"
             fullWidth
             color="primary"
-            onClick={handleTeamJoinBtnClick}
+            onClick={handleTeamJoinBtnClick.bind(this, team.id)}
           >
             チームに参加
           </Button>

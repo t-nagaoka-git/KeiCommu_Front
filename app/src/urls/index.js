@@ -38,6 +38,11 @@ export const searchTeamsUrl = (keyword) => {
   return `teams/search?keyword=${keyword}`;
 };
 
+// teamUsers
+export const joinTeamUrl = (id) => {
+  return `teams/${id}/join`;
+};
+
 // teamMessages
 export const getTeamMessageListUrl = (id) => {
   return `teams/${id}/team_messages`;
