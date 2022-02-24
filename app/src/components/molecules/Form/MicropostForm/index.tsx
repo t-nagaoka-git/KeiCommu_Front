@@ -4,13 +4,21 @@ import {MicropostItem} from '@/interfaces/models/micropost';
 import {AuthContext} from '@/pages/_app';
 import {createMicropostParams} from '@/interfaces';
 import {createMicropost} from '@/apis/microposts';
-import {Card, CardContent, TextField, Button} from '@material-ui/core';
+import {Card, CardContent, Box, Avatar, TextField, Button} from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
     borderRadius: 0,
-    padding: theme.spacing(2),
     maxWidth: 500,
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    margin: theme.spacing(1),
+  },
+  toolBar: {
+    marginLeft: theme.spacing(7),
+    justifyContent: 'flex-end',
   },
   btn: {
     marginTop: theme.spacing(1),
@@ -55,27 +63,31 @@ const MicropostForm = ({micropostList, setMicropostList}: FormPropsType) => {
         <Card className={classes.card} variant="outlined">
           <CardContent>
             <form noValidate autoComplete="off">
-              <TextField
-                value={content}
-                variant="outlined"
-                multiline
-                rows={4}
-                fullWidth
-                margin="dense"
-                onChange={handleChnageContent}
-              />
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                fullWidth
-                color="primary"
-                disabled={!content ? true : false}
-                className={classes.btn}
-                onClick={handleSubmit}
-              >
-                つぶやく
-              </Button>
+              <Box display={'flex'}>
+                <Avatar className={classes.avatar} src={currentUser.image.url} />
+                <TextField
+                  value={content}
+                  multiline
+                  rows={4}
+                  fullWidth
+                  margin="dense"
+                  onChange={handleChnageContent}
+                  placeholder="今日の目標を宣言しよう"
+                />
+              </Box>
+              <Box className={classes.toolBar} display={'flex'}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="medium"
+                  color="primary"
+                  disabled={!content ? true : false}
+                  className={classes.btn}
+                  onClick={handleSubmit}
+                >
+                  つぶやく
+                </Button>
+              </Box>
             </form>
           </CardContent>
         </Card>
