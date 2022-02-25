@@ -5,6 +5,7 @@ import {AuthContext} from '@/pages/_app';
 import {createMicropostParams} from '@/interfaces';
 import {createMicropost} from '@/apis/microposts';
 import {Card, CardContent, Box, Avatar, TextField, Button} from '@material-ui/core';
+import ImageIcon from '@material-ui/icons/Image';
 
 const useStyles = makeStyles((theme: Theme) => ({
   card: {
@@ -17,12 +18,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(1),
   },
   toolBar: {
-    marginLeft: theme.spacing(7),
-    justifyContent: 'flex-end',
-  },
-  btn: {
     marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(7),
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
+  image: {
+    cursor: 'pointer',
+  },
+  btn: {},
 }));
 
 type FormPropsType = {
@@ -76,6 +80,7 @@ const MicropostForm = ({micropostList, setMicropostList}: FormPropsType) => {
                 />
               </Box>
               <Box className={classes.toolBar} display={'flex'}>
+                <ImageIcon className={classes.image} color="primary" fontSize="medium" />
                 <Button
                   type="submit"
                   variant="contained"
