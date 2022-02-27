@@ -1,7 +1,8 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import {MicropostItem} from '@/interfaces/models/micropost';
-import {List, ListItem, ListItemAvatar, Avatar, ListItemText, Divider} from '@material-ui/core';
+import {List, ListItem, Box, ListItemAvatar, Avatar, ListItemText, ListItemIcon, Divider} from '@material-ui/core';
 import Link from 'next/link';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 
 const useStyles = makeStyles((theme: Theme) => ({
   list: {
@@ -11,8 +12,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid rgba(0, 0, 0, 0.12)',
   },
+  box: {
+    flexDirection: 'column',
+    width: '100%',
+  },
   inline: {
     display: 'inline',
+  },
+  image: {
+    cursor: 'pointer',
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -35,7 +45,12 @@ const MicropostList = ({micropostList}: ListPropsType) => {
                 </a>
               </Link>
             </ListItemAvatar>
-            <ListItemText primary={micropost.user.name} secondary={micropost.content} className={classes.inline} />
+            <Box className={classes.box} display={'flex'}>
+              <ListItemText primary={micropost.user.name} secondary={micropost.content} className={classes.inline} />
+              <ListItemIcon className={classes.image}>
+                <ThumbUpAltIcon color="action" fontSize="small" />
+              </ListItemIcon>
+            </Box>
           </ListItem>
           {micropostList.length != index + 1 && <Divider />}
         </>
