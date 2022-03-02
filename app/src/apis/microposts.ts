@@ -13,6 +13,6 @@ export const getTimeline = () => {
 };
 
 // 投稿
-export const createMicropost = (params: createMicropostParams) => {
+export const createMicropost = (params: FormData) => {
   return client.post(createMicropostUrl, params);
 };

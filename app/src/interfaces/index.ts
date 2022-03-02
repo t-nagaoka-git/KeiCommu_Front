@@ -20,6 +20,7 @@ export interface destroyRelationshipParams {
 
 export interface createMicropostParams {
   content: string;
+  image: string;
 }
 
 export interface createTeamParams {

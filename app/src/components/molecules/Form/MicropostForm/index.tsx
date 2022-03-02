@@ -49,6 +49,10 @@ type FormPropsType = {
   setMicropostList: Dispatch<SetStateAction<MicropostItem[]>>;
 };
 
+interface CustomFormData extends FormData {
+  append(name: keyof createMicropostParams, value: string | Blob, fileName?: string);
+}
+
 const MicropostForm = ({micropostList, setMicropostList}: FormPropsType) => {
   const classes = useStyles();
   const [content, setContent] = useState<string>('');
@@ -72,15 +76,17 @@ const MicropostForm = ({micropostList, setMicropostList}: FormPropsType) => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const params: createMicropostParams = {
-      content: content,
-    };
+    const formData = new FormData() as CustomFormData;
+    formData.append('content', content);
+    if (image) formData.append('image', image);
 
     try {
-      const res = await createMicropost(params);
+      const res = await createMicropost(formData);
       const micropost: MicropostItem = res.data.micropost;
       micropost.user = {id: currentUser.id, name: currentUser.name, image: currentUser.image};
       setContent('');
+      setImage(undefined);
+      setPreview('');
       setMicropostList([res.data.micropost, ...micropostList]);
     } catch (err) {
       console.log(err);
@@ -130,7 +136,7 @@ const MicropostForm = ({micropostList, setMicropostList}: FormPropsType) => {
                   variant="contained"
                   size="medium"
                   color="primary"
-                  disabled={!content ? true : false}
+                  disabled={!content && !image ? true : false}
                   className={classes.btn}
                   onClick={handleSubmit}
                 >
