@@ -47,6 +47,7 @@ const MicropostList = ({micropostList}: ListPropsType) => {
             </ListItemAvatar>
             <Box className={classes.box} display={'flex'}>
               <ListItemText primary={micropost.user.name} secondary={micropost.content} className={classes.inline} />
+              {micropost.image.url ? <img src={micropost.image.url} /> : <></>}
               <ListItemIcon className={classes.image}>
                 <ThumbUpAltIcon color="action" fontSize="small" />
               </ListItemIcon>
