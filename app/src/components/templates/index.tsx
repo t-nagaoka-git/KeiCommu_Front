@@ -12,7 +12,7 @@ export function Template({micropostList, setMicropostList}: TemplatePropsType) {
   return (
     <>
       <MicropostForm micropostList={micropostList} setMicropostList={setMicropostList} />
-      {0 < micropostList.length && <MicropostList micropostList={micropostList} />}
+      {0 < micropostList.length && <MicropostList micropostList={micropostList} setMicropostList={setMicropostList} />}
     </>
   );
 }
