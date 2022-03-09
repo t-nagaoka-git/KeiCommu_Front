@@ -23,6 +23,14 @@ export interface createMicropostParams {
   image: string;
 }
 
+export interface likeMicropostParams {
+  micropostId: number;
+}
+
+export interface unlikeMicropostParams {
+  micropostId: number;
+}
+
 export interface createTeamParams {
   name: string;
   description: string;

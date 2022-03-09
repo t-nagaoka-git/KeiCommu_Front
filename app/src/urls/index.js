@@ -30,6 +30,12 @@ export const destroyRelationshipUrl = 'relationships/destroy';
 export const indexMicropostUrl = 'microposts';
 export const getTimelineUrl = 'microposts/timeline';
 export const createMicropostUrl = 'microposts';
+export const likeMicropostUrl = (id) => {
+  return `microposts/${id}/like`;
+};
+export const unlikeMicropostUrl = (id) => {
+  return `microposts/${id}/unlike`;
+};
 
 // teams
 export const getTeamDetailListUrl = 'teams/list';

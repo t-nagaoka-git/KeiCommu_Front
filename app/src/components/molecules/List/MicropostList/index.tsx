@@ -1,6 +1,8 @@
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import {MicropostItem} from '@/interfaces/models/micropost';
 import {Dispatch, SetStateAction} from 'react';
+import {likeMicropostParams, unlikeMicropostParams} from '@/interfaces';
+import {likeMicropost, unlikeMicropost} from '@/apis/microposts';
 import {List, ListItem, Box, ListItemAvatar, Avatar, ListItemText, ListItemIcon, Divider} from '@material-ui/core';
 import Link from 'next/link';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
@@ -37,6 +39,18 @@ const MicropostList = ({micropostList, setMicropostList}: ListPropsType) => {
 
   const handleLikeIconClick = async (micropostId: number, liked: boolean) => {
     try {
+      if (liked) {
+        const params: unlikeMicropostParams = {
+          micropostId: micropostId,
+        };
+        await unlikeMicropost(params);
+      } else {
+        const params: likeMicropostParams = {
+          micropostId: micropostId,
+        };
+        await likeMicropost(params);
+      }
+
       setMicropostList(
         micropostList.map((micropost: MicropostItem) => {
           if (micropost.id == micropostId) micropost.liked = !liked;
