@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
+  itemBoxRecentTalk: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(2),
+    flexDirection: 'column',
+  },
   dialogActions: {
     padding: '20px 24px',
   },
@@ -93,6 +98,18 @@ const TeamDetailDialog = ({open, setOpen, setSelectTeam, team, currentUser}: Dia
           <Divider />
           <Box display={'flex'} className={classes.itemBox}>
             {team.description}
+          </Box>
+          <Divider />
+          <Box display={'flex'} className={classes.itemBoxRecentTalk}>
+            <Typography className={classes.itemName} variant="body1">
+              最近のやりとり
+            </Typography>
+            {team.recentTeamMessages &&
+              team.recentTeamMessages.map((recentTeamMessage) => (
+                <Typography variant="body2">
+                  {recentTeamMessage.userName} ： {recentTeamMessage.content}
+                </Typography>
+              ))}
           </Box>
           <Divider />
           <Box display={'flex'} className={classes.itemBox}>
