@@ -51,6 +51,9 @@ const TeamItem = ({team}: ListPropsType) => {
         </AvatarGroup>
       )}
       <CardContent className={classes.cardContent}>{team.description}</CardContent>
+      <CardContent className={classes.cardContent}>
+        {team.recentTeamMessages[0].userName} ： {team.recentTeamMessages[0].content}
+      </CardContent>
     </Card>
   );
 };
