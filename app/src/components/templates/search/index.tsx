@@ -114,7 +114,7 @@ export function Template({currentUser}: TemplatePropsType) {
       {0 < teams.length &&
         teams.map((team: ITeamItem) => (
           <div className={styles.teamItem} onClick={handleDetailDialog.bind(this, team)}>
-            <TeamItem team={team} />
+            <TeamItem team={team} recentTeamMessageDisplayFlag={false} />
           </div>
         ))}
       {selectTeam && (

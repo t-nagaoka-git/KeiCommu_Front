@@ -51,7 +51,7 @@ export function Template({teamList, setTeamList, currentUser}: TemplatePropsType
         <Link href={`/teams/${team.id}`}>
           <a>
             <div className={styles.teamItem}>
-              <TeamItem team={team} />
+              <TeamItem team={team} recentTeamMessageDisplayFlag={true} />
             </div>
           </a>
         </Link>

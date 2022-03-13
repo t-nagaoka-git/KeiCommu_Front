@@ -33,9 +33,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 type ListPropsType = {
   team: ITeamItem;
+  recentTeamMessageDisplayFlag: boolean;
 };
 
-const TeamItem = ({team}: ListPropsType) => {
+const TeamItem = ({team, recentTeamMessageDisplayFlag}: ListPropsType) => {
   const classes = useStyles();
 
   return (
@@ -50,10 +51,13 @@ const TeamItem = ({team}: ListPropsType) => {
           ))}
         </AvatarGroup>
       )}
-      <CardContent className={classes.cardContent}>{team.description}</CardContent>
-      <CardContent className={classes.cardContent}>
-        {team.recentTeamMessages[0].userName} ： {team.recentTeamMessages[0].content}
-      </CardContent>
+      {recentTeamMessageDisplayFlag ? (
+        <CardContent className={classes.cardContent}>
+          {team.recentTeamMessages[0].userName} ： {team.recentTeamMessages[0].content}
+        </CardContent>
+      ) : (
+        <CardContent className={classes.cardContent}>{team.description}</CardContent>
+      )}
     </Card>
   );
 };
