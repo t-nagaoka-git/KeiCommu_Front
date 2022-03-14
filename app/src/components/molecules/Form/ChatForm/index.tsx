@@ -2,7 +2,8 @@ import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
 import {useState} from 'react';
 import {createTeamMessageParams} from '@/interfaces';
 import {createTeamMessage} from '@/apis/teamMessages';
-import {TextField, Button} from '@material-ui/core';
+import {Box, TextField, Button} from '@material-ui/core';
+import ImageIcon from '@material-ui/icons/Image';
 import SendIcon from '@material-ui/icons/Send';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -15,6 +16,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     text: {
       width: '100%',
+    },
+    imageUploadIcon: {
+      height: theme.spacing(6),
+      width: theme.spacing(6),
+      cursor: 'pointer',
+    },
+    btn: {
+      height: theme.spacing(6),
     },
   })
 );
@@ -50,7 +59,9 @@ const ChatForm = ({teamId}: FormPropsType) => {
     <>
       <form className={classes.form} noValidate autoComplete="off">
         <TextField className={classes.text} label="メッセージを入力" onChange={handleChnageContent} value={content} />
+        <ImageIcon className={classes.imageUploadIcon} color="primary" fontSize="large" />
         <Button
+          className={classes.btn}
           color="primary"
           disabled={!content ? true : false}
           onClick={handleSubmit}
