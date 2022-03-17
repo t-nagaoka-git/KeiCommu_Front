@@ -40,5 +40,6 @@ export interface createTeamParams {
 }
 
 export interface createTeamMessageParams {
-  content: string;
+  content?: string;
+  image?: string;
 }

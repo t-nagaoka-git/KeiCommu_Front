@@ -8,6 +8,6 @@ export const getTeamMessageList = (id: number) => {
 };
 
 // 送信
-export const createTeamMessage = (id: number, params: createTeamMessageParams) => {
+export const createTeamMessage = (id: number, params: createTeamMessageParams | FormData) => {
   return client.post(createTeamMessageUrl(id), params);
 };
