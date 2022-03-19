@@ -42,24 +42,21 @@ interface CustomFormData extends FormData {
 const ChatForm = ({teamId}: FormPropsType) => {
   const classes = useStyles();
   const [content, setContent] = useState<string>('');
-  const [image, setImage] = useState<File>();
 
   const handleChnageContent = (e) => {
     setContent(e.target.value);
   };
 
-  const uploadImage = async (e) => {
+  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     const file = e.target.files[0];
-    setImage(file);
 
     const formData = new FormData() as CustomFormData;
-    formData.append('image', image);
+    formData.append('image', file);
 
     try {
       await createTeamMessage(teamId, formData);
-      setImage(undefined);
     } catch (err) {
       console.log(err);
     }
