@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       marginBottom: theme.spacing(1),
     },
-    messageContent: {
+    content: {
       width: '60%',
       borderRadius: theme.spacing(1),
       backgroundColor: theme.palette.grey[500],
@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(1),
       color: 'white',
       fontSize: '16px',
+    },
+    image: {
+      width: '60%',
+      marginBottom: theme.spacing(1),
+      marginLeft: theme.spacing(2),
     },
     displayName: {
       fontSize: '12px',
@@ -29,24 +34,31 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type MessagePropsType = {
-  message: string;
+  message?: string;
+  imageUrl?: string;
   timestamp: string;
   photoURL: string;
   displayName: string;
 };
 
-const OtherChatMessage = ({message, timestamp, photoURL, displayName}: MessagePropsType) => {
+const OtherChatMessage = ({message, imageUrl, timestamp, photoURL, displayName}: MessagePropsType) => {
   const classes = useStyles();
   return (
     <>
       <div className={classes.messageRow}>
         <Avatar alt={displayName} src={photoURL}></Avatar>
         <div>
-          <div className={classes.messageContent}>
-            <p>{message}</p>
+          {message ? (
+            <div className={classes.content}>
+              <p>{message}</p>
+            </div>
+          ) : (
+            <img className={classes.image} src={imageUrl} />
+          )}
+          <div>
+            <span className={classes.displayName}>{displayName}</span>
+            <span className={classes.timestamp}>{timestamp}</span>
           </div>
-          <span className={classes.displayName}>{displayName}</span>
-          <span className={classes.timestamp}>{timestamp}</span>
         </div>
       </div>
     </>

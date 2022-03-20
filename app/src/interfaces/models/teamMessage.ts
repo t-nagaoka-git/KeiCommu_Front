@@ -1,6 +1,9 @@
 export interface TeamMessageItem {
   id: number;
-  content: string;
+  content?: string;
+  image?: {
+    url: string;
+  };
   createdAt: Date;
   user: {
     id: number;

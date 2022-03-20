@@ -53,7 +53,8 @@ const TeamItem = ({team, recentTeamMessageDisplayFlag}: ListPropsType) => {
       )}
       {recentTeamMessageDisplayFlag ? (
         <CardContent className={classes.cardContent}>
-          {team.recentTeamMessages[0].userName} ： {team.recentTeamMessages[0].content}
+          {team.recentTeamMessages[0].userName} ：{' '}
+          {team.recentTeamMessages[0].content ? team.recentTeamMessages[0].content : '画像を送信しました'}
         </CardContent>
       ) : (
         <CardContent className={classes.cardContent}>{team.description}</CardContent>

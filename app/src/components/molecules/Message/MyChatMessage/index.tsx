@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       marginBottom: theme.spacing(1),
     },
-    messageContent: {
+    content: {
       width: '60%',
       borderRadius: theme.spacing(1),
       backgroundColor: theme.palette.primary.light,
@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
       padding: theme.spacing(1),
       color: 'white',
+    },
+    image: {
+      width: '60%',
+      marginBottom: theme.spacing(1),
+      marginRight: theme.spacing(2),
     },
     timestamp: {
       fontSize: '12px',
@@ -25,17 +30,22 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type MessagePropsType = {
-  message: string;
+  message?: string;
+  imageUrl?: string;
   timestamp: string;
 };
 
-const MyChatMessage = ({message, timestamp}: MessagePropsType) => {
+const MyChatMessage = ({message, imageUrl, timestamp}: MessagePropsType) => {
   const classes = useStyles();
   return (
     <div className={classes.messageRow}>
-      <div className={classes.messageContent}>
-        <p>{message}</p>
-      </div>
+      {message ? (
+        <div className={classes.content}>
+          <p>{message}</p>
+        </div>
+      ) : (
+        <img className={classes.image} src={imageUrl} />
+      )}
       <div className={classes.timestamp}>{timestamp}</div>
     </div>
   );

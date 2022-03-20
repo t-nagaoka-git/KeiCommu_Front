@@ -107,7 +107,8 @@ const TeamDetailDialog = ({open, setOpen, setSelectTeam, team, currentUser}: Dia
             {team.recentTeamMessages &&
               team.recentTeamMessages.map((recentTeamMessage) => (
                 <Typography variant="body2">
-                  {recentTeamMessage.userName} ： {recentTeamMessage.content}
+                  {recentTeamMessage.userName} ：{' '}
+                  {recentTeamMessage.content ? recentTeamMessage.content : '画像を送信しました'}
                 </Typography>
               ))}
           </Box>
