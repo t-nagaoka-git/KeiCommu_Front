@@ -38,6 +38,9 @@ export const unlikeMicropostUrl = (id) => {
 };
 
 // teams
+export const getTeamDetailUrl = (id) => {
+  return `teams/${id}`;
+};
 export const getTeamDetailListUrl = 'teams/list';
 export const createTeamUrl = 'teams';
 export const searchTeamsUrl = (keyword) => {

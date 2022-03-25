@@ -25,7 +25,7 @@ export interface TeamItem {
       url: string;
     };
   }[];
-  recentTeamMessages: {
+  recentTeamMessages?: {
     id: number;
     userName: string;
     content: string;

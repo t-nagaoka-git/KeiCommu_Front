@@ -1,6 +1,11 @@
 import {createTeamParams} from '@/interfaces/index';
-import {getTeamDetailListUrl, createTeamUrl, searchTeamsUrl} from '@/urls';
+import {getTeamDetailUrl, getTeamDetailListUrl, createTeamUrl, searchTeamsUrl} from '@/urls';
 import client from '@/lib/client';
+
+// 取得
+export const getTeamDetail = (id: number) => {
+  return client.get(getTeamDetailUrl(id));
+};
 
 // 一覧
 export const getTeamDetailList = () => {
