@@ -3,8 +3,10 @@ import {MicropostItem} from '@/interfaces/models/micropost';
 import {Dispatch, SetStateAction} from 'react';
 import {likeMicropostParams, unlikeMicropostParams} from '@/interfaces';
 import {likeMicropost, unlikeMicropost} from '@/apis/microposts';
-import {List, ListItem, Box, ListItemAvatar, Avatar, ListItemText, ListItemIcon, Divider} from '@material-ui/core';
+import {List, ListItem, Box, ListItemAvatar, Avatar, Typography, ListItemIcon, Divider} from '@material-ui/core';
 import Link from 'next/link';
+import moment from 'moment';
+import 'moment/locale/ja';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -19,8 +21,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column',
     width: '100%',
   },
-  inline: {
-    display: 'inline',
+  micropostHeader: {
+    alignItems: 'center',
+  },
+  userName: {
+    fontWeight: 'bold',
+    marginRight: theme.spacing(1),
+  },
+  createdAt: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    marginRight: theme.spacing(1),
+  },
+  content: {
+    color: ' rgb(15, 20, 25)',
   },
   image: {
     cursor: 'pointer',
@@ -75,7 +88,17 @@ const MicropostList = ({micropostList, setMicropostList}: ListPropsType) => {
               </Link>
             </ListItemAvatar>
             <Box className={classes.box} display={'flex'}>
-              <ListItemText primary={micropost.user.name} secondary={micropost.content} className={classes.inline} />
+              <Box className={classes.micropostHeader} display={'flex'}>
+                <Typography className={classes.userName} variant="subtitle1">
+                  {micropost.user.name}
+                </Typography>
+                <Typography className={classes.createdAt} variant="subtitle2">
+                  {moment(micropost.createdAt).fromNow()}
+                </Typography>
+              </Box>
+              <Typography className={classes.content} variant="body2">
+                {micropost.content}
+              </Typography>
               {micropost.image.url ? <img src={micropost.image.url} /> : <></>}
               <ListItemIcon
                 className={classes.image}
