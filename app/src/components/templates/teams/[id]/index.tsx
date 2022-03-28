@@ -3,7 +3,7 @@ import {User} from '@/interfaces/models/user';
 import {TeamMessageItem} from '@/interfaces/models/teamMessage';
 import {Dispatch, SetStateAction} from 'react';
 import {Paper, Typography, Box} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import ChatMessageList from '@/components/molecules/List/ChatMessageList';
 import ChatForm from '@/components/molecules/Form/ChatForm';
 import dynamic from 'next/dynamic';
@@ -61,7 +61,7 @@ export function Template({
     <Paper className={classes.paper} elevation={2}>
       <Box display={'flex'} className={classes.box}>
         <Typography className={classes.teamName}>{teamName}</Typography>
-        <MenuIcon className={classes.menuIcon} fontSize="large" />
+        <MoreHorizIcon className={classes.menuIcon} fontSize="large" />
       </Box>
       <Paper id="teamMessageList" className={classes.messagesBody}>
         <ChatMessageList teamMessageList={teamMessageList} currentUser={currentUser} />
