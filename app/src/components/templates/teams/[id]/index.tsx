@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     messagesBody: {
       margin: 10,
       overflowY: 'scroll',
-      height: 'calc( 100% - 80px )',
+      height: 'calc( 100% - 20% )',
     },
   })
 );
