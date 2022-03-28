@@ -5,8 +5,8 @@ export interface MicropostItem {
     url: string;
   };
   liked: boolean;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
   user: {
     id: number;
     name: string;
