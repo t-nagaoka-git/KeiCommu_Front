@@ -1,9 +1,13 @@
 import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
 import {User} from '@/interfaces/models/user';
 import {TeamMessageItem} from '@/interfaces/models/teamMessage';
-import {Dispatch, SetStateAction} from 'react';
-import {Paper, Typography, Box} from '@material-ui/core';
+import {Dispatch, SetStateAction, useState} from 'react';
+import {Paper, Box, Typography, IconButton, Menu, MenuItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import PanToolOutlinedIcon from '@material-ui/icons/PanToolOutlined';
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import ChatMessageList from '@/components/molecules/List/ChatMessageList';
 import ChatForm from '@/components/molecules/Form/ChatForm';
 import dynamic from 'next/dynamic';
@@ -57,11 +61,70 @@ export function Template({
   setReceivedTeamMessage,
 }: TemplatePropsType) {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Paper className={classes.paper} elevation={2}>
       <Box display={'flex'} className={classes.box}>
         <Typography className={classes.teamName}>{teamName}</Typography>
-        <MoreHorizIcon className={classes.menuIcon} fontSize="large" />
+        <IconButton
+          className={classes.menuIcon}
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleMenu}
+          color="inherit"
+        >
+          <MoreHorizIcon fontSize="large" />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={open}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <InfoOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="チーム詳細" />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <SettingsOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="チーム設定" />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <PanToolOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="強制退出" />
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <ExitToAppOutlinedIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="退出する" />
+          </MenuItem>
+        </Menu>
       </Box>
       <Paper id="teamMessageList" className={classes.messagesBody}>
         <ChatMessageList teamMessageList={teamMessageList} currentUser={currentUser} />
