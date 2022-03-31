@@ -5,7 +5,7 @@ import {AuthContext} from '@/pages/_app';
 import {signOut} from '@/apis/auth';
 import Cookies from 'js-cookie';
 import styles from './styles.module.css';
-import {Button, AppBar, Toolbar, Typography, IconButton, Menu, MenuItem} from '@material-ui/core';
+import {AppBar, Toolbar, Typography, IconButton, Menu, MenuItem} from '@material-ui/core';
 import Link from 'next/link';
 import HomeIcon from '@material-ui/icons/Home';
 import GroupIcon from '@material-ui/icons/Group';
@@ -48,7 +48,9 @@ function HeaderBase() {
           Cookies.remove('_client');
           Cookies.remove('_uid');
 
+          setAnchorEl(null);
           setIsLoggedIn(false);
+
           router.push('/login');
         } else {
           console.log('Failed in sign out');
@@ -61,31 +63,27 @@ function HeaderBase() {
     if (isLoggedIn && currentUser) {
       return (
         <>
-          <MenuItem>
-            <Link href={`/users/${currentUser.id}`}>
-              <a>プロフィール</a>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Button color="inherit" onClick={handleSignOut}>
-              ログアウト
-            </Button>
-          </MenuItem>
+          <Link href={`/users/${currentUser.id}`}>
+            <a>
+              <MenuItem onClick={handleClose}>プロフィール</MenuItem>
+            </a>
+          </Link>
+          <MenuItem onClick={handleSignOut}>ログアウト</MenuItem>
         </>
       );
     } else {
       return (
         <>
-          <MenuItem>
-            <Link href="/login">
-              <a>ログイン</a>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link href="/signup">
-              <a>アカウント登録</a>
-            </Link>
-          </MenuItem>
+          <Link href="/login">
+            <a>
+              <MenuItem onClick={handleClose}>ログイン</MenuItem>
+            </a>
+          </Link>
+          <Link href="/signup">
+            <a>
+              <MenuItem onClick={handleClose}>アカウント登録</MenuItem>
+            </a>
+          </Link>
         </>
       );
     }
