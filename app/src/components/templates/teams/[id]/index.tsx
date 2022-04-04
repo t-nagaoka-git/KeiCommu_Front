@@ -1,10 +1,12 @@
 import {makeStyles, Theme, createStyles} from '@material-ui/core/styles';
 import {User} from '@/interfaces/models/user';
+import {TeamItem} from '@/interfaces/models/team';
 import {TeamMessageItem} from '@/interfaces/models/teamMessage';
 import {Dispatch, SetStateAction, useState} from 'react';
 import {Paper, Box, Typography, IconButton, Menu, MenuItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import TeamDetailDialog from '@/components/molecules/Dialog/TeamDetailDialog';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import PanToolOutlinedIcon from '@material-ui/icons/PanToolOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
@@ -46,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
 type TemplatePropsType = {
   currentUser: User;
   teamId: number;
-  teamName: string;
+  team: TeamItem;
   teamMessageList: TeamMessageItem[] | [];
   getTeamMessageList: () => Promise<void>;
   setReceivedTeamMessage: Dispatch<SetStateAction<TeamMessageItem>>;
@@ -55,13 +57,14 @@ type TemplatePropsType = {
 export function Template({
   currentUser,
   teamId,
-  teamName,
+  team,
   teamMessageList,
   getTeamMessageList,
   setReceivedTeamMessage,
 }: TemplatePropsType) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openTeamDetailDialog, setOpenTeamDetailDialog] = useState(false);
   const open = Boolean(anchorEl);
 
   const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -72,10 +75,15 @@ export function Template({
     setAnchorEl(null);
   };
 
+  const handleTeamDetailDialog = () => {
+    setAnchorEl(null);
+    setOpenTeamDetailDialog(true);
+  };
+
   return (
     <Paper className={classes.paper} elevation={2}>
       <Box display={'flex'} className={classes.box}>
-        <Typography className={classes.teamName}>{teamName}</Typography>
+        <Typography className={classes.teamName}>{team?.name}</Typography>
         <IconButton
           className={classes.menuIcon}
           aria-controls="menu-appbar"
@@ -100,11 +108,19 @@ export function Template({
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={handleTeamDetailDialog}>
             <ListItemIcon>
               <InfoOutlinedIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary="チーム詳細" />
+            {openTeamDetailDialog && (
+              <TeamDetailDialog
+                open={openTeamDetailDialog}
+                setOpen={setOpenTeamDetailDialog}
+                team={team}
+                currentUser={currentUser}
+              />
+            )}
           </MenuItem>
           <MenuItem onClick={handleClose}>
             <ListItemIcon>

@@ -50,7 +50,7 @@ export default function Page() {
   return (
     <Template
       teamId={id}
-      teamName={team?.name}
+      team={team}
       teamMessageList={teamMessageList}
       getTeamMessageList={GetTeamMessageList}
       setReceivedTeamMessage={setReceivedTeamMessage}

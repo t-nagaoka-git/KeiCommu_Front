@@ -56,17 +56,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 type DialoggPropsType = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  setSelectTeam: Dispatch<SetStateAction<TeamItem>>;
   team: TeamItem;
   currentUser: User;
 };
 
-const TeamDetailDialog = ({open, setOpen, setSelectTeam, team, currentUser}: DialoggPropsType) => {
+const TeamDetailDialog = ({open, setOpen, team, currentUser}: DialoggPropsType) => {
   const classes = useStyles();
   const router = useRouter();
 
   const handleClose = () => {
-    setSelectTeam(null);
     setOpen(false);
   };
 

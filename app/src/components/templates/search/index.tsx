@@ -46,7 +46,7 @@ export function Template({currentUser}: TemplatePropsType) {
   const [searchTarget, setSearchTarget] = useState<string>('teams');
   const [keyword, setKeyword] = useState<string>('');
   const [teams, setTeams] = useState<ITeamItem[]>([]);
-  const [openDetailDialog, setOpenDetailDialog] = useState(false);
+  const [openTeamDetailDialog, setOpenTeamDetailDialog] = useState(false);
   const [selectTeam, setSelectTeam] = useState<ITeamItem>(null);
   const [users, setUsers] = useState<User[]>([]);
 
@@ -78,9 +78,9 @@ export function Template({currentUser}: TemplatePropsType) {
     }
   };
 
-  const handleDetailDialog = (team: ITeamItem) => {
+  const handleTeamDetailDialog = (team: ITeamItem) => {
     setSelectTeam(team);
-    setOpenDetailDialog(true);
+    setOpenTeamDetailDialog(true);
   };
 
   return (
@@ -113,15 +113,14 @@ export function Template({currentUser}: TemplatePropsType) {
       </Paper>
       {0 < teams.length &&
         teams.map((team: ITeamItem) => (
-          <div className={styles.teamItem} onClick={handleDetailDialog.bind(this, team)}>
+          <div className={styles.teamItem} onClick={handleTeamDetailDialog.bind(this, team)}>
             <TeamItem team={team} recentTeamMessageDisplayFlag={false} />
           </div>
         ))}
-      {selectTeam && (
+      {openTeamDetailDialog && (
         <TeamDetailDialog
-          open={openDetailDialog}
-          setOpen={setOpenDetailDialog}
-          setSelectTeam={setSelectTeam}
+          open={openTeamDetailDialog}
+          setOpen={setOpenTeamDetailDialog}
           team={selectTeam}
           currentUser={currentUser}
         />
