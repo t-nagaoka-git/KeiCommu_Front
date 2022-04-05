@@ -119,6 +119,7 @@ export function Template({
                 setOpen={setOpenTeamDetailDialog}
                 team={team}
                 currentUser={currentUser}
+                joinButtonDisplayFlag={false}
               />
             )}
           </MenuItem>

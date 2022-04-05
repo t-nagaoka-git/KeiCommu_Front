@@ -58,9 +58,10 @@ type DialoggPropsType = {
   setOpen: Dispatch<SetStateAction<boolean>>;
   team: TeamItem;
   currentUser: User;
+  joinButtonDisplayFlag: boolean;
 };
 
-const TeamDetailDialog = ({open, setOpen, team, currentUser}: DialoggPropsType) => {
+const TeamDetailDialog = ({open, setOpen, team, currentUser, joinButtonDisplayFlag}: DialoggPropsType) => {
   const classes = useStyles();
   const router = useRouter();
 
@@ -150,16 +151,22 @@ const TeamDetailDialog = ({open, setOpen, team, currentUser}: DialoggPropsType) 
           <Divider />
         </DialogContent>
         <DialogActions className={classes.dialogActions}>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            fullWidth
-            color="primary"
-            onClick={handleTeamJoinBtnClick.bind(this, team.id)}
-          >
-            チームに参加
-          </Button>
+          {joinButtonDisplayFlag ? (
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              fullWidth
+              color="primary"
+              onClick={handleTeamJoinBtnClick.bind(this, team.id)}
+            >
+              チームに参加
+            </Button>
+          ) : (
+            <Button type="submit" variant="contained" size="large" fullWidth color="primary" onClick={handleClose}>
+              閉じる
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </>

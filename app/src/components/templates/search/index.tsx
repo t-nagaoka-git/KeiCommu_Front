@@ -123,6 +123,7 @@ export function Template({currentUser}: TemplatePropsType) {
           setOpen={setOpenTeamDetailDialog}
           team={selectTeam}
           currentUser={currentUser}
+          joinButtonDisplayFlag={true}
         />
       )}
       {0 < users.length && <UsersList usersList={users} />}
