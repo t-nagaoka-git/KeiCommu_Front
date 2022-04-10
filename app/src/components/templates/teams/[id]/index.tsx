@@ -113,16 +113,16 @@ export function Template({
               <InfoOutlinedIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary="チーム詳細" />
-            {openTeamDetailDialog && (
-              <TeamDetailDialog
-                open={openTeamDetailDialog}
-                setOpen={setOpenTeamDetailDialog}
-                team={team}
-                currentUser={currentUser}
-                joinButtonDisplayFlag={false}
-              />
-            )}
           </MenuItem>
+          {openTeamDetailDialog && (
+            <TeamDetailDialog
+              open={openTeamDetailDialog}
+              setOpen={setOpenTeamDetailDialog}
+              team={team}
+              currentUser={currentUser}
+              joinButtonDisplayFlag={false}
+            />
+          )}
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
               <SettingsOutlinedIcon fontSize="small" />

@@ -99,19 +99,23 @@ const TeamDetailDialog = ({open, setOpen, team, currentUser, joinButtonDisplayFl
             {team.description}
           </Box>
           <Divider />
-          <Box display={'flex'} className={classes.itemBoxRecentTalk}>
-            <Typography className={classes.itemName} variant="body1">
-              最近のやりとり
-            </Typography>
-            {team.recentTeamMessages &&
-              team.recentTeamMessages.map((recentTeamMessage) => (
-                <Typography variant="body2">
-                  {recentTeamMessage.userName} ：{' '}
-                  {recentTeamMessage.content ? recentTeamMessage.content : '画像を送信しました'}
+          {joinButtonDisplayFlag && (
+            <>
+              <Box display={'flex'} className={classes.itemBoxRecentTalk}>
+                <Typography className={classes.itemName} variant="body1">
+                  最近のやりとり
                 </Typography>
-              ))}
-          </Box>
-          <Divider />
+                {team.recentTeamMessages &&
+                  team.recentTeamMessages.map((recentTeamMessage) => (
+                    <Typography variant="body2">
+                      {recentTeamMessage.userName} ：{' '}
+                      {recentTeamMessage.content ? recentTeamMessage.content : '画像を送信しました'}
+                    </Typography>
+                  ))}
+              </Box>
+              <Divider />
+            </>
+          )}
           <Box display={'flex'} className={classes.itemBox}>
             <Typography className={classes.itemName} variant="body1">
               最終更新
